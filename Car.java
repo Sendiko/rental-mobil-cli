@@ -1,12 +1,4 @@
 
-// Ingin membuat mobil -> harus memiliki desain/blueprint
-// Nama Mobil -> Atribut
-// Jumlah roda -> Atribut
-// Tipe mesin -> Atribut
-// Bisa berjalan -> Method
-// Bisa berbelok -> Method
-// Bisa mundur -> Method
-
 class Car {
 
     String name;
