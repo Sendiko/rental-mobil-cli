@@ -90,5 +90,7 @@ class Main {
                 System.out.println("Maaf pilihan anda invalid.");
                 break;
         }
+
+        scanner.close();
     }
  }
