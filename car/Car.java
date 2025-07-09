@@ -1,18 +1,20 @@
+package car;
 
-class Car {
+public class Car {
 
     /**
      * Access modifier
      * 
      * Cara untuk menentukan akses untuk Atribut dan Method.
      */
-    private String name;
-    private String licensePlate;
-    private String brand;
-    private String model;
-    private int year;
-    private double pricePerDay;
-    private boolean isAvailable;
+    protected String name;
+    protected String licensePlate;
+    protected String brand;
+    protected String model;
+    protected int year;
+    protected double pricePerDay;
+    protected boolean isAvailable;
+    protected int seat;
 
     /**
      * Constructor untuk membuat object `Car`
@@ -32,7 +34,8 @@ class Car {
         String model,
         int year,
         double pricePerDay,
-        boolean isAvailable
+        boolean isAvailable,
+        int seat
     ) {
         this.name = name;
         this.licensePlate = licensePlate;
@@ -41,6 +44,7 @@ class Car {
         this.year = year;
         this.pricePerDay = pricePerDay;
         this.isAvailable = isAvailable;
+        this.seat = seat;
     }
 
     /**
@@ -103,19 +107,32 @@ class Car {
         return isAvailable;
     }
 
-    public void setIsAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
+    public void rentCar() {
+        this.isAvailable = false;
     }
 
-    @Override
-    public String toString() {
+    public void returnCar() {
+        this.isAvailable = true;
+    }
+
+    public int getSeat() {
+        return seat;
+    }
+
+    public void setSeat(int seat) {
+        this.seat = seat;
+    }
+
+    public String displayDetail() {
         return "==> Detail Mobil <==" + 
         "\nNama: " + name + 
         "\nBrand: " + brand + 
         "\nModel: " + model + 
+        "\nPlat Nomer: " + licensePlate + 
         "\nYear: " + year + 
         "\nHarga/Hari: Rp." + pricePerDay + 
-        "\nTersedia: " + isAvailable;
+        "\nTersedia: " + isAvailable +
+        "\nJumlah Kursi: " + seat;
     }
 
 }

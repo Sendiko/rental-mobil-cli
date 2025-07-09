@@ -2,47 +2,115 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import car.Car;
+import car.Luxury;
+import car.SUV;
+import car.Sedan;
+import customer.Customer;
+import transaction.Transaction;
+
 class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
         /**
-         * Membuat bebrapa objek baru sebuah `Car`
-         */
-        Car car1 = new Car(
-            "McLaren Senna",
-            "A 1234 B",
-            "McLaren", 
-            "Senna", 
-            2019, 
-            10000000, 
-            true
-        );
-        Car car2 = new Car(
-            "Mazda RX-7", 
-            "D 4567 E", 
-            "Mazda", 
-            "RX-7", 
-            2002, 
-            5000000, 
-            true
-        );
-        Car car3 = new Car(
-            "Honda NSX", 
-            "F 8910 G", 
-            "Honda", 
-            "NSX", 
-            1990, 
-            7500000, 
-            true
-        );
-
-        /**
          * Membuat sebuah array berisi objek car
          * yang telah dibuat.
          */
-        Car[] cars = {car1, car2, car3};
+        List<Car> cars = new ArrayList<>();
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        /**
+         * Membuat beberapa objek baru sebuah `Car`
+         */
+        Luxury mercySClass = new Luxury(
+                "Mercedez-Benz S-Class",
+                "A 1234 B",
+                "Mercedez",
+                "S-Class",
+                2023,
+                2500000,
+                true,
+                4);
+        cars.add(mercySClass);
+
+        Luxury bmw7Series = new Luxury(
+                "BMW 7 Series",
+                "C 4567 D",
+                "BMW", "7 Series",
+                2023,
+                2200000,
+                true,
+                2);
+        cars.add(bmw7Series);
+
+        Sedan hondaCivic = new Sedan(
+                "Honda Civic",
+                "F 9101 HIJ",
+                "Honda",
+                "Civic",
+                2021,
+                750000.00,
+                true,
+                5);
+        cars.add(hondaCivic);
+
+        Sedan toyotaCamry = new Sedan(
+                "Toyota Camry",
+                "G 1122 KLM",
+                "Toyota",
+                "Camry",
+                2020,
+                800000.00, // Rp. 800,000 per day
+                true,
+                5);
+        cars.add(toyotaCamry);
+
+        Sedan nissanAltima = new Sedan(
+                "Nissan Altima",
+                "H 3344 NOP",
+                "Nissan",
+                "Altima",
+                2022,
+                780000.00, // Rp. 780,000 per day
+                false, // This car is currently rented
+                5);
+        cars.add(nissanAltima);
+
+        SUV toyotaFortuner = new SUV(
+                "Toyota Fortuner",
+                "I 5566 QRS",
+                "Toyota",
+                "Fortuner",
+                2023,
+                1200000.00, // Rp. 1,200,000 per day
+                true,
+                7);
+        cars.add(toyotaFortuner);
+
+        SUV mitsubishiPajero = new SUV(
+                "Mitsubishi Pajero Sport",
+                "J 7788 TUV",
+                "Mitsubishi",
+                "Pajero Sport",
+                2021,
+                1100000.00, // Rp. 1,100,000 per day
+                true,
+                7);
+        cars.add(mitsubishiPajero);
+
+        SUV hondaCrv = new SUV(
+                "Honda CR-V",
+                "K 9900 WXY",
+                "Honda",
+                "CR-V",
+                2022,
+                1000000.00, // Rp. 1,000,000 per day
+                false,
+                5);
+        cars.add(hondaCrv);
 
         /* Membuat sebuah List untuk menyimpan data Customer */
         List<Customer> customers = new ArrayList<>();
@@ -53,37 +121,61 @@ class Main {
         System.out.println("====> Java Rental Car <====");
         System.out.println("Selamat datang di Java Rental Car, ada yang bisa kami bantu?");
         System.out.println("1. Lihat mobil yang tersedia");
-        System.out.println("2. Saya ingin rental mobil");
+        System.out.println("2. Buat transaksi Rental");
 
+        System.out.print("Pilihan anda: ");
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
-                for (int i = 0; i < cars.length; i++) {
-                    System.out.println(cars[i]);
+                for (Car car : cars) {
+                    System.out.println(car.displayDetail());
                 }
                 break;
             case 2:
-                System.out.println("Oke! Input data dulu yaaa");
+                System.out.println("Masukan data pelanggan");
 
                 /* Meminta input nama dan menampungnya dalam variable */
-                System.out.print("Nama anda: ");
+                System.out.print("Nama pelanggan: ");
                 String name = scanner.next();
 
                 /* Meminta input NIK dan menampungnya dalam variable */
-                System.out.print("NIK anda: ");
+                System.out.print("NIK pelanggan: ");
                 String nik = scanner.next();
 
                 /* Meminta input Nomor HP dan menampungnya dalam variable */
-                System.out.print("Nomor HP anda: ");
+                System.out.print("Nomor HP pelanggan: ");
                 String phoneNumber = scanner.next();
 
                 /* Membuat objek `Customer` baru */
                 Customer customer = new Customer(name, nik, phoneNumber);
                 /* Menambahkan objek baru kedalam List Customer */
                 customers.add(customer);
-                for (int i = 0; i < customers.size(); i++) {
-                    System.out.println(customers.get(i));
+                
+                for (Car car : cars) {
+                    if (car.getIsAvailable() == true) {
+                        System.out.println(car.displayDetail());
+                    }
+                    System.out.println();
                 }
+
+                System.out.print("Pilih (Plat Nomer) mobil untuk dirental: ");
+                scanner.nextLine();
+                String chosenLicensePlate = scanner.nextLine();
+                for (Car car : cars) {
+                    System.out.println("Plat Nomer: [" + car.getLicensePlate() + "]");
+                    System.out.println("Input license plate: [" + chosenLicensePlate + "]");
+                    System.out.println("Result: " + car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate));
+                    if (car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate)) {
+                        System.out.println("Metode Pembayaran: ");
+                        String paymentMethod = scanner.next();
+                        car.rentCar();
+                        Transaction transaction = new Transaction(customer, car, paymentMethod);
+                        transactions.add(transaction);
+                        break;
+                    }
+                    
+                }
+                System.out.println("Maaf, mobil dengan plat nomer tersebut tidak ditemukan.");
                 break;
 
             default:
@@ -93,4 +185,4 @@ class Main {
 
         scanner.close();
     }
- }
+}
