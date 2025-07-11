@@ -39,4 +39,11 @@ public class Transaction {
         return paymentMethod;
     }
 
+    public String displayDetail() {
+        return "====> Detail Transaksi <====" + 
+        "\nMobil yang di rental: " + this.car.getName() + ", " + this.car.getLicensePlate() + 
+        "\nPelanggan: " + this.customer.getName() + ", " + this.customer.getPhoneNumber() + 
+        "\n============================";
+    }
+
 }

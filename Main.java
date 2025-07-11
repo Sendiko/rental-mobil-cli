@@ -15,11 +15,15 @@ class Main {
         Scanner scanner = new Scanner(System.in);
 
         /**
-         * Membuat sebuah array berisi objek car
+         * Membuat sebuah ArrayList berisi objek car
          * yang telah dibuat.
          */
         List<Car> cars = new ArrayList<>();
 
+        /**
+         * Membuat sebuah ArrayList berisi objek transaction
+         * yang telah dibuat.
+         */
         List<Transaction> transactions = new ArrayList<>();
 
         /**
@@ -118,71 +122,119 @@ class Main {
         /**
          * Command-Line Interface
          */
-        System.out.println("====> Java Rental Car <====");
-        System.out.println("Selamat datang di Java Rental Car, ada yang bisa kami bantu?");
-        System.out.println("1. Lihat mobil yang tersedia");
-        System.out.println("2. Buat transaksi Rental");
 
-        System.out.print("Pilihan anda: ");
-        int choice = scanner.nextInt();
-        switch (choice) {
-            case 1:
-                for (Car car : cars) {
-                    System.out.println(car.displayDetail());
-                }
-                break;
-            case 2:
-                System.out.println("Masukan data pelanggan");
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println("====> Java Rental Car <====");
+            System.out.println("Selamat datang di Java Rental Car, ada yang bisa kami bantu?");
+            System.out.println("0. Keluar");
+            System.out.println("1. Lihat Mobil yang tersedia");
+            System.out.println("2. Buat transaksi Rental");
+            System.out.println("3. Lihat daftar Transaksi");
+            System.out.println("4. Servis Mobil");
+            System.out.println("5. Tandai Mobil selsai servis");
 
-                /* Meminta input nama dan menampungnya dalam variable */
-                System.out.print("Nama pelanggan: ");
-                String name = scanner.next();
+            System.out.print("Pilihan anda: ");
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 0:
+                    System.out.print("Sampai jumpa lagi!");
+                    isRunning = false;
+                    break;
 
-                /* Meminta input NIK dan menampungnya dalam variable */
-                System.out.print("NIK pelanggan: ");
-                String nik = scanner.next();
-
-                /* Meminta input Nomor HP dan menampungnya dalam variable */
-                System.out.print("Nomor HP pelanggan: ");
-                String phoneNumber = scanner.next();
-
-                /* Membuat objek `Customer` baru */
-                Customer customer = new Customer(name, nik, phoneNumber);
-                /* Menambahkan objek baru kedalam List Customer */
-                customers.add(customer);
-                
-                for (Car car : cars) {
-                    if (car.getIsAvailable() == true) {
+                case 1:
+                    for (Car car : cars) {
                         System.out.println(car.displayDetail());
                     }
-                    System.out.println();
-                }
+                    break;
+                case 2:
+                    System.out.println("Masukan data pelanggan");
 
-                System.out.print("Pilih (Plat Nomer) mobil untuk dirental: ");
-                scanner.nextLine();
-                String chosenLicensePlate = scanner.nextLine();
-                for (Car car : cars) {
-                    System.out.println("Plat Nomer: [" + car.getLicensePlate() + "]");
-                    System.out.println("Input license plate: [" + chosenLicensePlate + "]");
-                    System.out.println("Result: " + car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate));
-                    if (car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate)) {
-                        System.out.println("Metode Pembayaran: ");
-                        String paymentMethod = scanner.next();
-                        car.rentCar();
-                        Transaction transaction = new Transaction(customer, car, paymentMethod);
-                        transactions.add(transaction);
-                        break;
+                    /* Meminta input nama dan menampungnya dalam variable */
+                    System.out.print("Nama pelanggan: ");
+                    String name = scanner.next();
+
+                    /* Meminta input NIK dan menampungnya dalam variable */
+                    System.out.print("NIK pelanggan: ");
+                    String nik = scanner.next();
+
+                    /* Meminta input Nomor HP dan menampungnya dalam variable */
+                    System.out.print("Nomor HP pelanggan: ");
+                    String phoneNumber = scanner.next();
+
+                    /* Membuat objek `Customer` baru */
+                    Customer customer = new Customer(name, nik, phoneNumber);
+                    /* Menambahkan objek baru kedalam List Customer */
+                    customers.add(customer);
+
+                    for (Car car : cars) {
+                        if (car.getIsAvailable() == true) {
+                            System.out.println(car.displayDetail());
+                        }
+                        System.out.println();
                     }
-                    
-                }
-                System.out.println("Maaf, mobil dengan plat nomer tersebut tidak ditemukan.");
-                break;
 
-            default:
-                System.out.println("Maaf pilihan anda invalid.");
-                break;
+                    System.out.print("Pilih (Plat Nomer) mobil untuk dirental: ");
+                    scanner.nextLine();
+                    String chosenLicensePlate = scanner.nextLine();
+                    for (Car car : cars) {
+                        if (car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate)) {
+                            System.out.print("Metode Pembayaran: ");
+                            String paymentMethod = scanner.next();
+                            car.rent();
+                            Transaction transaction = new Transaction(customer, car, paymentMethod);
+                            transactions.add(transaction);
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    for (Transaction transaction : transactions) {
+                        System.out.println(transaction.displayDetail());
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("Cari mobil dengan Plat Nomer: ");
+                    scanner.nextLine();
+                    String chosenLicensePlate2 = scanner.nextLine();
+                    for (Car car : cars) {
+                        if (car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate2)) {
+                            System.out.println(car.isAvailable());
+                            if (car.getIsAvailable()) {
+                                car.maintenance();
+                                System.out.println("Oke, mobil ini akan segera di servis.");
+                            } else {
+                                System.out.println("Mobil ini masih dirental.");
+                            }
+                            break;
+                        }
+                    }
+                    break;
+
+                case 5:
+                    System.out.print("Cari mobil dengan Plat Nomer: ");
+                    scanner.nextLine();
+                    String chosenLicensePlate3 = scanner.nextLine();
+                    for (Car car : cars) {
+                        if (car.getLicensePlate().equalsIgnoreCase(chosenLicensePlate3)) {
+                            System.out.println(car.isAvailable());
+                            if (!car.getIsAvailable()) {
+                                car.doneMaintenance();
+                                System.out.println("Mobil berhasil di servis.");
+                            } else {
+                                System.out.println("Mobil ini sedang tidak di servis.");
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("Maaf pilihan anda invalid.");
+                    break;
+            }
+
         }
-
         scanner.close();
     }
 }

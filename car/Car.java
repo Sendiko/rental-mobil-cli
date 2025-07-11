@@ -1,6 +1,6 @@
 package car;
 
-public class Car {
+public class Car implements Rentable {
 
     /**
      * Access modifier
@@ -107,14 +107,6 @@ public class Car {
         return isAvailable;
     }
 
-    public void rentCar() {
-        this.isAvailable = false;
-    }
-
-    public void returnCar() {
-        this.isAvailable = true;
-    }
-
     public int getSeat() {
         return seat;
     }
@@ -133,6 +125,40 @@ public class Car {
         "\nHarga/Hari: Rp." + pricePerDay + 
         "\nTersedia: " + isAvailable +
         "\nJumlah Kursi: " + seat;
+    }
+
+    /**
+     * Implementasi method 
+     * Interface Rentable
+     */
+
+    @Override
+    public void rent() {
+        this.isAvailable = false;
+    }
+
+    @Override
+    public void returnVehicle() {
+        this.isAvailable = true;
+    }
+
+    @Override
+    public String isAvailable() {
+        if (isAvailable) {
+            return "Mobil ini tersedia.";
+        } else {
+            return "Mobil ini tidak tersedia";
+        }
+    }
+
+    @Override
+    public void maintenance() {
+        this.isAvailable = false;
+    }
+
+    @Override
+    public void doneMaintenance() {
+        this.isAvailable = true;
     }
 
 }
