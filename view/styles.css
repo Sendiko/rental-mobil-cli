@@ -1,0 +1,40 @@
+.app-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.app-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.headline {
+    font-family: "Montserrat", sans-serif;
+    font-size: xx-large;
+    font-weight: 500;
+}
+
+.subheadline {
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.paragraph {
+    font-family: "Montserrat", sans-serif;
+    font-size: large;
+}
+
+#create-transaction {
+    font-family: "Montserrat", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: purple;
+    color: #FFFBFF;
+    border-radius: 8px;
+}
